@@ -21,12 +21,9 @@ export default {
 <style>
   .nav-bar{
     display: flex;
-    /* position: fixed; */
     line-height: 44px;
     box-shadow: 0 3px 3px rgba(100,100,100,0.3);
-    top:0;
-    left: 0;
-    right: 0;
+    
   }
   .left, .right{
   }
