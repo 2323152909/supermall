@@ -12,59 +12,12 @@
     <home-recommend :recommends="recommends"/>
     <!-- 今日推荐 -->
     <home-feature/>
-    <tab-control :titles="['流行','新款','精选']" class="tab-control"/>
-    <ul>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-      <li>列表&</li>
-    </ul>
+    <tab-control :titles="['流行','新款','精选']"
+                 class="tab-control"
+                 @tabClick="tabClick"/>
+    <goods-list :goods="goods[goodsSelect].list" class="goods"/>
+    <!-- <home-goods :goodsTitle="goodsTitle" :goodsList="goods[goodsSelect].list"/> -->
+    
   </div>
 </template>
 
@@ -73,9 +26,12 @@
   import HomeSwiper from './childComps/HomeSwiper.vue'
   import HomeRecommend from './childComps/HomeRecommend.vue'
   import HomeFeature from './childComps/HomeFeature.vue'
+  import HomeGoods from './childComps/HomeGoods.vue'
 
   import NavBar from 'components/common/navbar/NavBar.vue'
   import TabControl from 'components/content/tabControl/TabControl.vue'
+  import GoodsList from 'components/content/goods/GoodsList.vue'
+  import GoodsListItem from 'components/content/goods/GoodsListItem.vue'
 
   import {getHomeMultidata,getHomeGoods} from 'network/home.js'
   
@@ -83,10 +39,14 @@
     name:'Home',
     components:{
       NavBar,
+      TabControl,
+      GoodsList,
+      GoodsListItem,
+
       HomeSwiper,
       HomeRecommend,
       HomeFeature,
-      TabControl
+      HomeGoods
     },
     data() {
       return {
@@ -94,24 +54,61 @@
         recommends:[],
         goods:{
           pop:{page:0,list:[]},
-          news:{page:0,list:[]},
+          new:{page:0,list:[]},
           sell:{page:0,list:[]},
-        }
+        },
+        goodsSelect:'pop',
       }
     },
     created(){
       // 1.请求多个数据
-      getHomeMultidata().then(res => {
-        // console.log(res);
-        this.banners = res.data.banner.list;
-        this.recommends = res.data.recommend.list;
-        // console.log(this.banners);
-        // console.log(this.recommends);
-      }),
-      getHomeGoods().then(res => {
-
-      })
-    }
+      this.getMultidata()
+      // 2.请求商品数据
+      this.getGoods('pop')
+      this.getGoods('new')
+      this.getGoods('sell')
+    },
+    methods: {
+      getMultidata(){
+        // 1.请求多个数据
+        getHomeMultidata().then(res => {
+          // console.log(res);
+          this.banners = res.data.banner.list;
+          this.recommends = res.data.recommend.list;
+          // console.log(this.banners);
+          // console.log(this.recommends);
+        })
+      },
+      getGoods(type){
+        const page = this.goods[type].page + 1
+        // 2.请求商品数据
+        getHomeGoods(type,page).then(res => {
+          // 将读取到的list加入到goods对应的list中
+          this.goods[type].list.push(...res.data.list)
+          // 将现在的页码加一
+          this.goods[type].page += 1
+          
+          console.log(res);
+        })
+      },
+      tabClick(index){
+        console.log(index);
+        switch(index){
+          case 0:
+            // this.getGoods('pop')
+            this.goodsSelect = 'pop';
+            break;
+          case 1: 
+            // this.getGoods('new')
+            this.goodsSelect = 'new';
+            break;
+          case 2:
+            // this.getGoods('sell')
+            this.goodsSelect = 'sell';
+            break;
+        }
+      }
+    },
   }
 </script>
 
@@ -132,6 +129,9 @@
   .tab-control{
     position: sticky;
     top: 44px;
+    width: 100%;
+    z-index:9;
     background-color: white;
   }
+  
 </style>
