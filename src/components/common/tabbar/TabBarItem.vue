@@ -57,7 +57,7 @@
     /* 对弹性布局进行均等分 */
     flex: 1;
     text-align:center;
-    height: 49px;
+    height: 51px;
     font-size: 14px;
   }
   .tab-bar-item img{

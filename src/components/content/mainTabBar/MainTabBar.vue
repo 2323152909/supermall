@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-tab-bar">
     <tab-bar>
       <!-- 首页 -->
       <tab-bar-item link="/home">
@@ -67,5 +67,5 @@ import tabBarItem from 'components/common/tabbar/TabBarItem.vue'
 </script>
 
 <style scoped>
-
+  
 </style>
