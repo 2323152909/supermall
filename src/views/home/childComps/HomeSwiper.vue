@@ -3,7 +3,7 @@
     <swiper class="home-swiper">
       <swiper-item v-for='(item,index) in banners' :key="index">
         <a :href="item.link">
-          <img :src="item.image">
+          <img :src="item.image" @load="imageLoad">
         </a>
       </swiper-item>
     </swiper>
@@ -26,7 +26,21 @@
           return []
         }
       },
-    }
+    },
+    data() {
+      return {
+        isloadEmit:false
+      }
+    },
+    methods: {
+      imageLoad(){
+        // 确保只发出一次，不会重复发送
+        if(!this.isloadEmit){
+          this.$emit('swiperImageLoad')
+          this.isloadEmit = true
+        } 
+      }
+    },
   }
 </script>
 

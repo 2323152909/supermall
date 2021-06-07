@@ -42,7 +42,7 @@
         this.$emit('scroll',position)
       })
       // 重新加载scroll可滚动高度
-      this.scroll.refresh()
+      // this.scroll.refresh()
       // 3.上拉加载更多
       this.scroll.on('pullingUp',() => {
         this.$emit('pullingUp',this.scroll)
@@ -50,7 +50,7 @@
     },
     methods: {
       scrollTo(x,y,time=300){
-        this.scroll.scrollTo(x,y,time)
+        this.scroll && this.scroll.scrollTo(x,y,time)
       },
       refresh(){
         this.scroll.refresh()

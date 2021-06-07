@@ -25,8 +25,7 @@
     },
     methods: {
       imageLoad(){
-        // console.log("imageLoad")
-        // this.$bus.$emit('imageLoad')
+        this.$bus.emit('imageLoad')
       }
     },
   }

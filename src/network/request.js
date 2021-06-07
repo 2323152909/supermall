@@ -16,7 +16,7 @@ export function request1(config){
   instance.interceptors.response.use(response => {
     return response.data;
   },error => {
-  return Promise.reject(error);
+    return Promise.reject(error);
   });
   // 发送网络请求
   return instance(config);

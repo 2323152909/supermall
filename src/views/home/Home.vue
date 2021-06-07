@@ -6,16 +6,23 @@
         <h2>购物街</h2>
       </template>
     </nav-bar>
-    <scroll class="content" @scroll="scroll" @pullingUp="pullingUp" ref="scroll" :probeType="3" :pullUpLoad="true">
+    <scroll class="content" @scroll="scroll" 
+                            @pullingUp="pullingUp" 
+                            ref="scroll" 
+                            :probeType="3" 
+                            :pullUpLoad="true">
       <!-- 轮播图 -->
-      <home-swiper :banners="banners" />
+      <home-swiper :banners="banners" 
+                    @swiperImageLoad="swiperImageLoad"/>
       <!-- 福利部分 -->
       <home-recommend :recommends="recommends"/>
       <!-- 今日推荐 -->
       <home-feature/>
       <tab-control :titles="['流行','新款','精选']"
-                  class="tab-control"
-                  @tabClick="tabClick"/>
+                    class="tab-control"
+                    @tabClick="tabClick"
+                    ref="tabControl"
+                    :style="tabStyle"/>
       <goods-list :goods="showGoods" class="goods"/>
     </scroll>
     <back-top @click.native="backTop" v-show="showBack"/>
@@ -37,6 +44,7 @@
   import BackTop from 'components/content/backTop/BackTop.vue';
 
   import {getHomeMultidata,getHomeGoods} from 'network/home.js'
+  import {debounce} from 'common/utils'
   
   export default {
     name:'Home',
@@ -62,7 +70,9 @@
           sell:{page:0,list:[]},
         },
         goodsSelect:'pop',
-        showBack:false
+        showBack:false,
+        taboffsetTop:0,
+        tabStyle:{}
       }
     },
     created(){
@@ -72,22 +82,71 @@
       this.getGoods('pop')
       this.getGoods('new')
       this.getGoods('sell')
-
-      // 3.监听item中的图片加载是否完成
-      // this.$bus.$on('imageLoad',() => {
-      //   this.$refs.scroll.refresh()
-      //   console.log("bus总线监听");
-      // })
     },
-    updated() {
-      this.$refs.scroll.refresh()
+    mounted() {
+      const refresh = debounce(this.$refs.scroll.refresh,500)
+      // 3.监听item中的图片加载是否完成,此处监听事件是 this.$bus.on('事件',function(){})
+      // console.log(this.$bus);
+      this.$bus.on('imageLoad',() => {
+        // this.$refs.scroll.refresh()
+        refresh()
+        // console.log("bus总线监听");
+      })
     },
     computed:{
       showGoods(){
         return this.goods[this.goodsSelect].list
-      }
+        // this.$refs.scroll.refresh()
+      },
     },
     methods: {
+      /**
+       * 事件监听相关的
+       */
+      swiperImageLoad(){
+        // 获取tabControl的offsetTop
+        this.taboffsetTop = this.$refs.tabControl.$el.offsetTop
+        console.log(this.taboffsetTop);
+      },
+      tabClick(index){
+        // console.log(index);
+        switch(index){
+          case 0:
+            this.goodsSelect = 'pop';
+            break;
+          case 1: 
+            this.goodsSelect = 'new';
+            break;
+          case 2:
+            this.goodsSelect = 'sell';
+            break;
+        }
+      },
+      // 返回顶部功能
+      backTop(){
+        console.log("点击返回")
+        this.$refs.scroll.scrollTo(0,0,500)
+      },
+      // 监听下拉距离
+      scroll(position){
+        // 判断backTop是否显示
+        this.showBack = -(position.y) >1200
+        // 判断tabControl是否吸顶（position:fixed）
+        if(-position.y >= this.taboffsetTop){
+          this.tabStyle = {
+            position: 'fixed',
+          }
+        }else{{
+          this.tabStyle = null
+        }}
+      },
+      // 上拉加载更多数据
+      pullingUp(bs){
+        this.getGoods(this.goodsSelect)
+        setTimeout(()=>{
+          bs.finishPullUp()
+        },500)
+      },
       /**
        * 网络请求相关的
        */
@@ -113,39 +172,6 @@
           // console.log(res);
         })
       },
-      /**
-       * 事件监听相关的
-       */
-      tabClick(index){
-        // console.log(index);
-        switch(index){
-          case 0:
-            this.goodsSelect = 'pop';
-            break;
-          case 1: 
-            this.goodsSelect = 'new';
-            break;
-          case 2:
-            this.goodsSelect = 'sell';
-            break;
-        }
-      },
-      // 返回顶部功能
-      backTop(){
-        console.log("点击返回")
-        this.$refs.scroll.scrollTo(0,0,500)
-      },
-      // 监听下拉距离
-      scroll(position){
-        this.showBack = -(position.y) >1200
-      },
-      // 上拉加载更多数据
-      pullingUp(bs){
-        this.getGoods(this.goodsSelect)
-        setTimeout(()=>{
-          bs.finishPullUp()
-        },1000)
-      }
     },
   }
 </script>
