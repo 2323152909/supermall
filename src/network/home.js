@@ -15,7 +15,7 @@ export function getHomeGoods(pop,page){
     },
     Headers:{
       // 设置跨域请求头
-      "Access-Control-Allow-Origin":'*',
+      // "Access-Control-Allow-Origin":'*',
     }
   })
 }

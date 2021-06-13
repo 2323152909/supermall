@@ -27,7 +27,7 @@
       }
     },
     mounted() {
-      console.log(this.$refs.wrapper);
+      // console.log(this.$refs.wrapper);
       // 1.创建better-scroll对象
       this.scroll = new BScroll(this.$refs.wrapper,{
         pullUpLoad:this.pullUpLoad,

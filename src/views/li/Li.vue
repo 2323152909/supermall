@@ -134,7 +134,7 @@
         console.log("上拉加载")
         setTimeout(()=>{
           this.scroll.finishPullUp()
-        },2000)
+        },500)
       })
     },
     

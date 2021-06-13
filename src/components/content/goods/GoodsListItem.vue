@@ -1,8 +1,6 @@
 <template>
-  <div class="goods-item">
-     <a :href="goodsItem.link">
-      <img :src='goodsItem.show.img' @load="imageLoad">
-    </a>   
+  <div class="goods-item" @click="goodsClick">
+    <img :src='showImage' @load="imageLoad">
     <div class="mark">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -23,9 +21,20 @@
         }
       }
     },
+    computed:{
+      showImage(){
+        // 判断哪个路径有图片就用哪个
+        return this.goodsItem.image || this.goodsItem.show.img
+      }
+    },
     methods: {
       imageLoad(){
         this.$bus.emit('imageLoad')
+      },
+      goodsClick(){
+        // console.log(this.$router);
+        // console.log(this.goodsItem);
+        this.$router.push('/detail/'+this.goodsItem.iid)
       }
     },
   }

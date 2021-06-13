@@ -6,6 +6,11 @@
         <h2>购物街</h2>
       </template>
     </nav-bar>
+    <tab-control :titles="['流行','新款','精选']"
+                    class="tab-control"
+                    @tabClick="tabClick"
+                    ref="tabControl1"
+                    v-show="isfixed"/>
     <scroll class="content" @scroll="scroll" 
                             @pullingUp="pullingUp" 
                             ref="scroll" 
@@ -21,8 +26,7 @@
       <tab-control :titles="['流行','新款','精选']"
                     class="tab-control"
                     @tabClick="tabClick"
-                    ref="tabControl"
-                    :style="tabStyle"/>
+                    ref="tabControl2"/>
       <goods-list :goods="showGoods" class="goods"/>
     </scroll>
     <back-top @click.native="backTop" v-show="showBack"/>
@@ -45,6 +49,7 @@
 
   import {getHomeMultidata,getHomeGoods} from 'network/home.js'
   import {debounce} from 'common/utils'
+  import {itemListenerMixin} from 'common/mixin';
   
   export default {
     name:'Home',
@@ -72,9 +77,11 @@
         goodsSelect:'pop',
         showBack:false,
         taboffsetTop:0,
-        tabStyle:{}
+        isfixed:false
       }
     },
+    // mixin混入
+    mixins:[itemListenerMixin],
     created(){
       // 1.请求多个数据
       this.getMultidata()
@@ -87,11 +94,19 @@
       const refresh = debounce(this.$refs.scroll.refresh,500)
       // 3.监听item中的图片加载是否完成,此处监听事件是 this.$bus.on('事件',function(){})
       // console.log(this.$bus);
-      this.$bus.on('imageLoad',() => {
+      this.itemImgListener = () => {
         // this.$refs.scroll.refresh()
         refresh()
         // console.log("bus总线监听");
-      })
+      }
+      this.$bus.on('imageLoad', this.itemImgListener)
+    },
+    deactivated(){
+      // 当不在home主页时，取消掉对图片加载的全局事监听
+      this.$bus.off('imageLoad', this.itemImgListener)
+    },
+    unmounted(){
+      // console.log("home destroyed")
     },
     computed:{
       showGoods(){
@@ -105,7 +120,7 @@
        */
       swiperImageLoad(){
         // 获取tabControl的offsetTop
-        this.taboffsetTop = this.$refs.tabControl.$el.offsetTop
+        this.taboffsetTop = this.$refs.tabControl2.$el.offsetTop
         console.log(this.taboffsetTop);
       },
       tabClick(index){
@@ -121,6 +136,9 @@
             this.goodsSelect = 'sell';
             break;
         }
+        // 将两个tabcontrol的点击索引改为同一个
+        this.$refs.tabControl1.currentIndex = index
+        this.$refs.tabControl2.currentIndex = index
       },
       // 返回顶部功能
       backTop(){
@@ -133,12 +151,10 @@
         this.showBack = -(position.y) >1200
         // 判断tabControl是否吸顶（position:fixed）
         if(-position.y >= this.taboffsetTop){
-          this.tabStyle = {
-            position: 'fixed',
-          }
-        }else{{
-          this.tabStyle = null
-        }}
+          this.isfixed = true
+        }else{
+          this.isfixed = false
+        }
       },
       // 上拉加载更多数据
       pullingUp(bs){
@@ -178,23 +194,22 @@
 
 <style scoped>
   #home{
-    padding-top: 44px;
-    padding-bottom: 49px;
+    /* padding-top: 44px;
+    padding-bottom: 49px; */
     height: 100vh;
     position: relative;
   }
   .home-nav{
     background-color:#FF8E96;
-    position: fixed;
+    /* 在使用原生时，为了让导航不跟随滚动 */
+    /* position: fixed;
     top:0;
     left: 0;
     right: 0;
-
-    z-index:9;
+    z-index:9;  */
   }
   .tab-control{
-    /* position: sticky; */
-    top: 44px;
+    position: relative;
     width: 100%;
     z-index:9;
     background-color: white;

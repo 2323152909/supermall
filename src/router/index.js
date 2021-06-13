@@ -6,7 +6,7 @@ const Home = () => import('views/home/Home.vue')
 const Li = () => import('views/li/Li.vue')
 const Shop = () => import('views/shop/Shop.vue')
 const Profile = () => import('views/profile/Profile.vue')
-
+const Detail = () => import('views/detail/Detail.vue')
 
 const routes =[
   {
@@ -14,29 +14,47 @@ const routes =[
     redirect:'/home'
   },
   {
+    name:'home',
     path:'/home',
-    component:Home
+    component:Home,
+    meta: {
+      keepAlive: true //设置页面是否需要使用缓存
+    },
   },
   {
     name:'li',
     path:'/li',
-    component:Li
+    component:Li,
+    meta: {
+      keepAlive: true //设置页面是否需要使用缓存
+    },
   },
   {
     name:'shop',
     path:'/shop',
-    component:Shop
+    component:Shop,
+    meta: {
+      keepAlive: true //设置页面是否需要使用缓存
+    },
   },
   {
     name:'profile',
     path:'/profile',
-    component:Profile
+    component:Profile,
+    meta: {
+      keepAlive: true //设置页面是否需要使用缓存
+    },
   },
+  {
+    // name:'detail',
+    path:'/detail/:id',
+    component:Detail,
+  }
 ]
 
 const router = createRouter({
   routes,
-  history:createWebHistory()
+  history:createWebHistory(),
 })
 
 export default router

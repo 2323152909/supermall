@@ -24,8 +24,6 @@ export default {
     line-height: 44px;
     box-shadow: 0 3px 3px rgba(100,100,100,0.3);   
   }
-  .left, .right{
-  }
   .left{
     width:20%;
     margin-left:0px;
@@ -33,7 +31,7 @@ export default {
   .center{
     width:60%;
     text-align:center;
-    color:white;
+    /* color:white; */
   }
   .right{
     width:20%;
