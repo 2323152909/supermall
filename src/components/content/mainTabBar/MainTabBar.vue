@@ -14,7 +14,7 @@
         </template>       
       </tab-bar-item>
       <!-- 分类 -->
-      <tab-bar-item link="/li">
+      <tab-bar-item link="/category">
         <template v-slot:item-ico>
           <img src="~assets/img/tabbar/li.png" alt="分类">
         </template>
@@ -26,7 +26,7 @@
         </template>       
       </tab-bar-item>
       <!-- 购物车 -->
-      <tab-bar-item link="/shop">
+      <tab-bar-item link="/cart">
         <template v-slot:item-ico>
           <img src="~assets/img/tabbar/shop.png" alt="购物车">
         </template>

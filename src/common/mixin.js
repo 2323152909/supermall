@@ -18,3 +18,18 @@ export const itemListenerMixin = {
       this.$bus.on('imageLoad', this.itemImgListener)
   },
 }
+
+export const backTopMixin = {
+  data(){
+    return {
+      showBack:false
+    }
+  },
+  methods:{
+    // 返回顶部功能
+    backTop(){
+      console.log("点击返回")
+      this.$refs.scroll.scrollTo(0,0,500)
+    },
+  }
+}

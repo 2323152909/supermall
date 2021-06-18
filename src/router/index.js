@@ -3,8 +3,8 @@ import Vue from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const Home = () => import('views/home/Home.vue')
-const Li = () => import('views/li/Li.vue')
-const Shop = () => import('views/shop/Shop.vue')
+const Category = () => import('views/category/Category.vue')
+const Cart = () => import('views/cart/Cart.vue')
 const Profile = () => import('views/profile/Profile.vue')
 const Detail = () => import('views/detail/Detail.vue')
 
@@ -22,17 +22,17 @@ const routes =[
     },
   },
   {
-    name:'li',
-    path:'/li',
-    component:Li,
+    name:'category',
+    path:'/category',
+    component:Category,
     meta: {
       keepAlive: true //设置页面是否需要使用缓存
     },
   },
   {
-    name:'shop',
-    path:'/shop',
-    component:Shop,
+    name:'cart',
+    path:'/cart',
+    component:Cart,
     meta: {
       keepAlive: true //设置页面是否需要使用缓存
     },

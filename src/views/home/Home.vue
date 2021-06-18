@@ -49,7 +49,7 @@
 
   import {getHomeMultidata,getHomeGoods} from 'network/home.js'
   import {debounce} from 'common/utils'
-  import {itemListenerMixin} from 'common/mixin';
+  import {itemListenerMixin, backTopMixin} from 'common/mixin';
   
   export default {
     name:'Home',
@@ -75,13 +75,13 @@
           sell:{page:0,list:[]},
         },
         goodsSelect:'pop',
-        showBack:false,
+        // showBack:false,
         taboffsetTop:0,
         isfixed:false
       }
     },
     // mixin混入
-    mixins:[itemListenerMixin],
+    mixins:[itemListenerMixin,backTopMixin],
     created(){
       // 1.请求多个数据
       this.getMultidata()
@@ -140,11 +140,6 @@
         this.$refs.tabControl1.currentIndex = index
         this.$refs.tabControl2.currentIndex = index
       },
-      // 返回顶部功能
-      backTop(){
-        console.log("点击返回")
-        this.$refs.scroll.scrollTo(0,0,500)
-      },
       // 监听下拉距离
       scroll(position){
         // 判断backTop是否显示
@@ -201,6 +196,7 @@
   }
   .home-nav{
     background-color:#FF8E96;
+    color: #fff;
     /* 在使用原生时，为了让导航不跟随滚动 */
     /* position: fixed;
     top:0;

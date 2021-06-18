@@ -21,12 +21,12 @@
   .back-top{
     z-index:999;
     position:absolute;
-    right:20px;
-    bottom:70px;
+    right:10px;
+    bottom:50px;
   }
   .back-top img{
-    height:50px;
-    width:50px;
+    height:44px;
+    width:44px;
     border-radius:50%;
   }
 </style>

@@ -109,7 +109,7 @@
   // 导入使用better-scroll框架
   import BScroll from 'better-scroll'
   export default {
-    name:'Li',
+    name:'Category',
     data() {
       return {
         scroll:null

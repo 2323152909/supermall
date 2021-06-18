@@ -19,21 +19,24 @@
     props:{
       probeType:{
         type:Number,
-        default:0
+        default:1
       },
       pullUpLoad:{
         type:Boolean,
-        default:false
+        default:true
       }
     },
     mounted() {
       // console.log(this.$refs.wrapper);
       // 1.创建better-scroll对象
       this.scroll = new BScroll(this.$refs.wrapper,{
+        // 下拉加载更多
         pullUpLoad:this.pullUpLoad,
+        // 可滚动
         probeType:this.probeType,
         click:true,
         observeDOM:true,
+        // 鼠标滚轮滚动
         mouseWheel:true
       })
       // 2.滚动事件监听

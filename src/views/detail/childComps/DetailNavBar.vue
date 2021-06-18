@@ -11,7 +11,7 @@
         <div class="title">
           <div v-for="(item,index) in titles"
                class="title-item"
-               @click="itemClick(index)">
+               @click="titleClick(index)">
                <span :class="{active: index == currentIndex}">{{item}}</span>
           </div>
         </div>
@@ -34,9 +34,10 @@
       }
     },
     methods: {
-      itemClick(index){
-        console.log(index)
+      titleClick(index){
+        // console.log(index)
         this.currentIndex = index
+        this.$emit('titleClick', index)
       },
       backClick(){
         console.log("backClick");
