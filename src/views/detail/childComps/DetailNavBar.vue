@@ -51,6 +51,7 @@ export default {
     top: 0;
     left: 0;
     width: 100vw;
+    z-index: 999;
 }
 .title {
     display: flex;

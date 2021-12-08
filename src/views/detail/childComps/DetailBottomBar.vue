@@ -33,6 +33,7 @@ export default {
 
 <style scoped>
 .bottom-bar {
+    z-index: 999;
     display: flex;
     width: 100vw;
     position: fixed;
