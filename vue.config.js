@@ -5,23 +5,16 @@ function resolve(dir) {
 module.exports = {
   devServer: {
     proxy: {
-      "^/api1": {
-        target: "http://123.207.32.32:8000",
-        pathRewrite: {
-          '^/api1': ''
-        },
-        changeOrigin: true
-      },
-      "^/api2": {
+      "^/api": {
         target: "http://152.136.185.210:7878/api/hy66",
         pathRewrite: {
-          '^/api2': ''
+          '^/api': ''
         },
         changeOrigin: true
       }
     },
   },
-  publicPath: "/",
+  publicPath: "./",
   configureWebpack: {
     resolve: {
       alias: {
