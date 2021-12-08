@@ -235,11 +235,12 @@ export default {
     position: relative;
 }
 .detail-nav {
-    position: relative;
+    position: fixed;
     z-index: 999;
     background-color: white;
 }
 .detail-bottom-bar {
     z-index: 999;
+    background-color: white;
 }
 </style>
