@@ -1,17 +1,47 @@
 const path = require('path');//引入path模块
-function resolve(dir){
-  return path.join(__dirname,dir)//path.join(__dirname)设置绝对路径
+function resolve(dir) {
+  return path.join(__dirname, dir)//path.join(__dirname)设置绝对路径
 }
-module.exports={
-  chainWebpack:(config)=>{
-    //给路径起别名
-    config.resolve.alias
-        .set('@',resolve('./src'))
-        .set('components',resolve('./src/components'))
-        .set('views',resolve('src/views'))
-        .set('assets',resolve('src/assets'))
-        .set('common',resolve('src/common'))
-        .set('network',resolve('src/network'))
-    //set第一个参数：设置的别名，第二个参数：设置的路径
+module.exports = {
+  devServer: {
+    proxy: {
+      "^/api1": {
+        target: "http://123.207.32.32:8000",
+        pathRewrite: {
+          '^/api1': ''
+        },
+        changeOrigin: true
+      },
+      "^/api2": {
+        target: "http://152.136.185.210:7878/api/hy66",
+        pathRewrite: {
+          '^/api2': ''
+        },
+        changeOrigin: true
+      }
+    },
+  },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@': resolve('./src'),
+        'components': resolve('./src/components'),
+        'views': resolve('src/views'),
+        'assets': resolve('src/assets'),
+        'common': resolve('src/common'),
+        'network': resolve('src/network')
+      }
+    }
   }
+  // chainWebpack:(config)=>{
+  //   //给路径起别名
+  //   config.resolve.alias
+  //       .set('@',resolve('./src'))
+  //       .set('components',resolve('./src/components'))
+  //       .set('views',resolve('src/views'))
+  //       .set('assets',resolve('src/assets'))
+  //       .set('common',resolve('src/common'))
+  //       .set('network',resolve('src/network'))
+  //   //set第一个参数：设置的别名，第二个参数：设置的路径
+  // },
 }
