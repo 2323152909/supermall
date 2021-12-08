@@ -225,7 +225,6 @@ export default {
 <style scoped>
 #detail {
     position: relative;
-    z-index: 9;
     background-color: white;
     height: 100vh;
     padding-top: 44px;
