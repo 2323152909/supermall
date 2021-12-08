@@ -14,7 +14,7 @@
             <goods-list :goods="recommends" ref="recommends" />
         </scroll>
         <back-top @click.native="backTop" v-show="showBack" />
-        <detail-bottom-bar @addToCart="addToCart" />
+        <detail-bottom-bar class="detail-bottom-bar" @addToCart="addToCart" />
         <!-- <toast :message="message" :show="show"/> -->
     </div>
 </template>
@@ -236,7 +236,10 @@ export default {
 }
 .detail-nav {
     position: relative;
-    z-index: 9;
+    z-index: 999;
     background-color: white;
+}
+.detail-bottom-bar {
+    z-index: 999;
 }
 </style>
