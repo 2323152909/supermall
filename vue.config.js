@@ -3,17 +3,17 @@ function resolve(dir) {
   return path.join(__dirname, dir)//path.join(__dirname)设置绝对路径
 }
 module.exports = {
-  devServer: {
-    proxy: {
-      "^/api": {
-        target: "http://152.136.185.210:7878/api/hy66",
-        pathRewrite: {
-          '^/api': ''
-        },
-        changeOrigin: true
-      }
-    },
-  },
+  // devServer: {
+  //   proxy: {
+  //     "^/api": {
+  //       target: "http://152.136.185.210:7878/api/hy66",
+  //       pathRewrite: {
+  //         '^/api': ''
+  //       },
+  //       changeOrigin: true
+  //     }
+  //   },
+  // },
   publicPath: "./",
   configureWebpack: {
     resolve: {

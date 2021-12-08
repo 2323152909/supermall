@@ -25,8 +25,8 @@ export function request1(config) {
 
 export function request2(config) {
   const instance = axios.create({
-    baseURL: '/api',
-    // baseURL: 'http://152.136.185.210:7878/api/m5',
+    // baseURL: '/api',
+    baseURL: 'http://152.136.185.210:7878/api/hy66',
     timeout: 5000,
   })
 
