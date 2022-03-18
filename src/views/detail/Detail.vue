@@ -224,22 +224,28 @@ export default {
 
 <style scoped>
 #detail {
-    position: relative;
+    /* position: relative; */
     background-color: white;
     height: 100vh;
     padding-top: 44px;
+    padding-bottom: 49px;
+    box-sizing: border-box;
 }
 .content {
-    height: calc(100% - 93px);
-    position: relative;
+    height: 100%;
 }
 .detail-nav {
     position: fixed;
     z-index: 999;
+    left: 0;
+    top: 0;
     background-color: white;
 }
 .detail-bottom-bar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 49px;
     z-index: 999;
-    background-color: white;
 }
 </style>
