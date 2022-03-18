@@ -228,7 +228,7 @@ export default {
     background-color: white;
     height: 100vh;
     padding-top: 44px;
-    padding-bottom: 49px;
+    padding-bottom: 51px;
     box-sizing: border-box;
 }
 .content {
@@ -245,7 +245,7 @@ export default {
     position: fixed;
     left: 0;
     bottom: 0;
-    height: 49px;
+    height: 51px;
     z-index: 999;
 }
 </style>
