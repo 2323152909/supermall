@@ -41,7 +41,6 @@ export default {
         })
         // 2.滚动事件监听
         this.scroll.on('scroll', (position) => {
-            // console.log(position);
             this.$emit('scroll', position)
         })
         // 重新加载scroll可滚动高度
@@ -63,8 +62,12 @@ export default {
 </script>
 
 <style scoped>
+.wrapper {
+    height: 100%;
+}
 .content {
     position: relative;
+    overflow: hidden;
     z-index: 1;
 }
 </style>

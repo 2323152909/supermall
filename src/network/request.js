@@ -44,3 +44,25 @@ export function request2(config) {
 
   return instance(config);
 }
+
+export function request3(config) {
+  const instance = axios.create({
+    // baseURL: '/api',
+    baseURL: 'http://120.79.64.82:8088',
+    timeout: 5000,
+  })
+
+  // instance.interceptors.request.use(res => {
+  //   return res;
+  // },error => {
+  //   return Promise.reject(error)
+  // })
+  // 配置响应拦截器
+  instance.interceptors.response.use(response => {
+    return response;
+  }, error => {
+    return Promise.reject(error);
+  });
+
+  return instance(config);
+}

@@ -40,7 +40,7 @@ import { itemListenerMixin, backTopMixin } from 'common/mixin';
 import { mapActions } from 'vuex'
 
 export default {
-    name: 'Detail',
+    name: 'detail',
     components: {
         DetailNavBar,
         DetailSwiper,
