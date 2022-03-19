@@ -7,7 +7,7 @@
             </template>
         </nav-bar>
         <tab-control :titles="['流行','新款','精选']" class="tab-control1" @tabClick="tabClick" ref="tabControl1" v-show="isfixed" />
-        <scroll @scroll="scroll" @pullingUp="pullingUp" ref="scroll" :probeType="3" :pullUpLoad="true">
+        <scroll class="content" @scroll="scroll" @pullingUp="pullingUp" ref="scroll" :probeType="3" :pullUpLoad="true">
             <!-- 轮播图 -->
             <home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad" />
             <!-- 福利部分 -->
@@ -49,7 +49,8 @@ export default {
         HomeRecommend,
         HomeFeature,
         Scroll,
-        BackTop
+        BackTop,
+        currentInnerWidth: 0
     },
     data() {
         return {
@@ -91,10 +92,14 @@ export default {
         //     // console.log("bus总线监听");
         // }
         this.$bus.on('imageLoad', this.itemImgListener)
-        window.onresize = () => {
+        console.log(window.innerWidth);
+        this.currentInnerWidth = window.innerWidth
+        window.onresize = (event) => {
             // 当夜面尺寸变化时
-            refresh()
-            location.reload()
+            if (event.currentTarget.innerWidth !== this.currentInnerWidth) {
+                refresh()
+                location.reload()
+            }
         }
     },
     deactivated() {
@@ -205,14 +210,14 @@ export default {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 9;
+    z-index: 999;
 }
 .tab-control1 {
     position: absolute;
     top: 44px;
     left: 0;
     width: 100%;
-    z-index: 9;
+    z-index: 999;
     background-color: white;
 }
 </style>

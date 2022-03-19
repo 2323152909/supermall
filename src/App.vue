@@ -32,4 +32,9 @@ export default {
     left: 50%;
     padding: 10px 5px;
 }
+::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+    background: transparent;
+}
 </style>

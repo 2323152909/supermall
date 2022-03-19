@@ -64,10 +64,10 @@ export default {
 <style scoped>
 .wrapper {
     height: 100%;
-}
-.content {
     position: relative;
     overflow: hidden;
     z-index: 1;
+    left: 0;
+    top: 0;
 }
 </style>
